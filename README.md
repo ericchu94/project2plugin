@@ -1,5 +1,5 @@
 # project2plugin
-Converts Unreal Engine projects to a plugins
+Creates Unreal Engine plugins from projects
 
 # usage
 `python3.6 project2plugin.py path/to/project`
