@@ -11,14 +11,12 @@ import textwrap
 BASE_PATH = 'Plugins'
 
 
-def _create_dir(wd):
-    os.makedirs(wd, exist_ok=True)
-
-
 def _create_uplugin(path, project_name):
     print(f'Creating {project_name}.uplugin')
+    ts = datetime.datetime.utcnow().isoformat()
     uplugin = {
         'FileVersion': 3,
+        'VersionName': ts,
         'FriendlyName': project_name,
         'EnabledByDefault': True,
         'Modules': [
@@ -143,11 +141,10 @@ def _create_third_party(path):
 def project2plugin(path):
     abspath = os.path.abspath(path)
     project_name = os.path.basename(abspath)
-    ts = datetime.datetime.utcnow().strftime('%Y%m%dT%H%M%SZ')
-    wd = os.path.join(BASE_PATH, f'{project_name}-{ts}')
+    wd = os.path.join(BASE_PATH, project_name)
 
-    _create_dir(wd)
-
+    shutil.rmtree(wd, ignore_errors=True)
+    os.makedirs(wd)
     os.chdir(wd)
 
     _create_uplugin(path, project_name)
